@@ -1,4 +1,4 @@
-class Kata::OfferHandler
+class OfferHandler
 
   attr_reader :offers, :catalog, :product, :product_quantities
 
@@ -35,9 +35,9 @@ class Kata::OfferHandler
   end
 
   def discount_amt
-    return 2 if offer.offer_type == Kata::SpecialOfferType::TWO_FOR_AMOUNT
-    return 3 if offer.offer_type == Kata::SpecialOfferType::THREE_FOR_TWO
-    return 5 if offer.offer_type == Kata::SpecialOfferType::FIVE_FOR_AMOUNT
+    return 2 if offer.offer_type == SpecialOfferType::TWO_FOR_AMOUNT
+    return 3 if offer.offer_type == SpecialOfferType::THREE_FOR_TWO
+    return 5 if offer.offer_type == SpecialOfferType::FIVE_FOR_AMOUNT
     return 1
   end
 
@@ -47,38 +47,38 @@ class Kata::OfferHandler
 
   # -------------------- hmmmm......
   def two_for_amount_offer?
-    offer.offer_type == Kata::SpecialOfferType::TWO_FOR_AMOUNT && quantity_as_int >= 2
+    offer.offer_type == SpecialOfferType::TWO_FOR_AMOUNT && quantity_as_int >= 2
   end
 
   def three_for_two_offer?
-    offer.offer_type == Kata::SpecialOfferType::THREE_FOR_TWO && quantity_as_int > 2
+    offer.offer_type == SpecialOfferType::THREE_FOR_TWO && quantity_as_int > 2
   end
 
   def ten_percent_discount_offer?
-    offer.offer_type == Kata::SpecialOfferType::TEN_PERCENT_DISCOUNT
+    offer.offer_type == SpecialOfferType::TEN_PERCENT_DISCOUNT
   end
 
   def five_for_amount_offer?
-    offer.offer_type == Kata::SpecialOfferType::FIVE_FOR_AMOUNT && quantity_as_int >= 5
+    offer.offer_type == SpecialOfferType::FIVE_FOR_AMOUNT && quantity_as_int >= 5
   end
 
   def handle_two_for_amount
     total = offer.argument * (quantity_as_int / discount_amt) + quantity_as_int % 2 * unit_price
     discount_n = unit_price * quantity - total
-    Kata::Discount.new(product, "2 for " + offer.argument.to_s, discount_n)
+    Discount.new(product, "2 for " + offer.argument.to_s, discount_n)
   end
 
   def handle_three_for_two
     discount_amount = quantity * unit_price - ((number_of_x * 2 * unit_price) + quantity_as_int % 3 * unit_price)
-    Kata::Discount.new(product, "3 for 2", discount_amount)
+    Discount.new(product, "3 for 2", discount_amount)
   end
 
   def handle_ten_percent
-    Kata::Discount.new(product, offer.argument.to_s + "% off", quantity * unit_price * offer.argument / 100.0)
+    Discount.new(product, offer.argument.to_s + "% off", quantity * unit_price * offer.argument / 100.0)
   end
 
   def handle_five_for_amount
     discount_total = unit_price * quantity - (offer.argument * number_of_x + quantity_as_int % 5 * unit_price)
-    Kata::Discount.new(product, discount_amt.to_s + " for " + offer.argument.to_s, discount_total)
+    Discount.new(product, discount_amt.to_s + " for " + offer.argument.to_s, discount_total)
   end
 end

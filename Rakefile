@@ -14,7 +14,7 @@ namespace :test do
     Rake::Task["test"].execute
   end
 
-  desc "Run tests with mutations (specify the class to mutate: rake test:mutation[Kata::Offer])"
+  desc "Run tests with mutations (specify the class to mutate: rake test:mutation[Offer])"
   task :mutation, [:klass] do |_, args|
     sh "bundle exec mutant -I test --use minitest #{args.klass}" rescue 0
   end

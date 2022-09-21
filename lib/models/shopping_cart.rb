@@ -1,4 +1,4 @@
-class Kata::ShoppingCart
+class ShoppingCart
 
   def initialize
     @items = []
@@ -9,17 +9,17 @@ class Kata::ShoppingCart
     Array.new @items
   end
 
+  def product_quantities
+    @product_quantities
+  end
+
   def add_item(product)
     add_item_quantity(product, 1.0)
     nil
   end
 
-  def product_quantities
-    @product_quantities
-  end
-
   def add_item_quantity(product, quantity)
-    @items << Kata::ProductQuantity.new(product, quantity)
+    @items << ProductQuantity.new(product, quantity)
     if @product_quantities.key?(product)
       product_quantities[product] = product_quantities[product] + quantity
     else
@@ -31,7 +31,7 @@ class Kata::ShoppingCart
     @product_quantities.keys.each do |product|
       next unless offers.key?(product)
 
-      discount = Kata::OfferHandler.new(offers, catalog, product, product_quantities).handle_offer
+      discount = OfferHandler.new(offers, catalog, product, product_quantities).handle_offer
 
       receipt.add_discount(discount) if discount
     end

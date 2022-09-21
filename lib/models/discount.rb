@@ -1,4 +1,4 @@
-class Kata::Discount
+class Discount
 
   attr_reader :product, :description, :discount_amount
 

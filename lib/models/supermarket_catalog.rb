@@ -1,4 +1,4 @@
-class Kata::SupermarketCatalog
+class SupermarketCatalog
 
   def add_product(product, price)
     raise NotImplementedError

@@ -1,5 +1,5 @@
 module Kata
 end
 
-pattern = File.join(File.dirname(__FILE__), 'kata', '**', '*.rb')
+pattern = File.join(File.dirname(__FILE__), '**', '*.rb')
 Dir[pattern].each { |filepath| require_relative filepath }
