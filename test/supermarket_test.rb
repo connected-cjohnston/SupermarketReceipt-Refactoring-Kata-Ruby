@@ -4,7 +4,7 @@ class SupermarketTest < Minitest::Test
   include Approvals
 
   def setup
-    @catalog = FakeCatalog.new
+    @catalog = SupermarketCatalog.new
     @teller = Teller.new(@catalog)
     @the_cart = ShoppingCart.new
 
