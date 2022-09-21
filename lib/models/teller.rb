@@ -12,13 +12,11 @@ class Teller
   def checks_out_articles_from(the_cart)
     receipt = Receipt.new
 
-    the_cart.items.each do |pq|
-      product = pq.product
-      quantity = pq.quantity
-      unit_price = @catalog.unit_price(product)
-      price = quantity * unit_price
+    the_cart.items.each do |item|
+      unit_price = @catalog.unit_price(item.product)
+      price = item.quantity * unit_price
 
-      receipt.add_product(product, quantity, unit_price, price)
+      receipt.add_product(item.product, item.quantity, unit_price, price)
     end
 
     handle_offers(the_cart, receipt)

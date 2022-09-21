@@ -1,4 +1,4 @@
-class ProductQuantity
+class Item
   attr_reader :product, :quantity
 
   def initialize(product, quantity)

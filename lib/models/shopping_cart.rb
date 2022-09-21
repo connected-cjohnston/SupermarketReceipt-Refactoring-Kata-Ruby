@@ -19,7 +19,7 @@ class ShoppingCart
   end
 
   def add_item_quantity(product, quantity)
-    @items << ProductQuantity.new(product, quantity)
+    @items << Item.new(product, quantity)
     if @product_quantities.key?(product)
       product_quantities[product] = product_quantities[product] + quantity
     else
