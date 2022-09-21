@@ -13,5 +13,4 @@ class FakeCatalog < SupermarketCatalog
   def unit_price(p)
     @prices.fetch(p.name)
   end
-
 end

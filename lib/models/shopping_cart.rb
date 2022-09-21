@@ -26,14 +26,4 @@ class ShoppingCart
       product_quantities[product] = quantity
     end
   end
-
-  def handle_offers(receipt, offers, catalog)
-    @product_quantities.keys.each do |product|
-      next unless offers.key?(product)
-
-      discount = OfferHandler.new(offers, catalog, product, product_quantities).handle_offer
-
-      receipt.add_discount(discount) if discount
-    end
-  end
 end
