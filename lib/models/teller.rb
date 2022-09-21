@@ -13,12 +13,12 @@ class Teller
     receipt = Receipt.new
 
     the_cart.items.each do |pq|
-      p = pq.product
+      product = pq.product
       quantity = pq.quantity
-      unit_price = @catalog.unit_price(p)
+      unit_price = @catalog.unit_price(product)
       price = quantity * unit_price
 
-      receipt.add_product(p, quantity, unit_price, price)
+      receipt.add_product(product, quantity, unit_price, price)
     end
 
     handle_offers(the_cart, receipt)
