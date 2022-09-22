@@ -1,11 +1,9 @@
 class Offer
+  attr_reader :product, :offer_type, :unit_price
 
-  attr_reader :product, :offer_type, :argument
-
-  def initialize(offer_type, product, argument)
+  def initialize(offer_type, product, unit_price)
     @offer_type = offer_type
-    @argument = argument
+    @unit_price = unit_price
     @product = product
   end
-
 end

@@ -45,7 +45,7 @@ class OfferHandler
     @number_of_x = quantity_as_int / discount_amt
   end
 
-  # -------------------- hmmmm......
+  # --------------------
   def two_for_amount_offer?
     offer.offer_type == SpecialOfferType::TWO_FOR_AMOUNT && quantity_as_int >= 2
   end
@@ -62,10 +62,11 @@ class OfferHandler
     offer.offer_type == SpecialOfferType::FIVE_FOR_AMOUNT && quantity_as_int >= 5
   end
 
+  # --------------------
   def handle_two_for_amount
-    total = offer.argument * (quantity_as_int / discount_amt) + quantity_as_int % 2 * unit_price
+    total = offer.unit_price * (quantity_as_int / discount_amt) + quantity_as_int % 2 * unit_price
     discount_n = unit_price * quantity - total
-    Discount.new(product, "2 for " + offer.argument.to_s, discount_n)
+    Discount.new(product, "2 for " + offer.unit_price.to_s, discount_n)
   end
 
   def handle_three_for_two
@@ -74,11 +75,11 @@ class OfferHandler
   end
 
   def handle_ten_percent
-    Discount.new(product, offer.argument.to_s + "% off", quantity * unit_price * offer.argument / 100.0)
+    Discount.new(product, offer.unit_price.to_s + "% off", quantity * unit_price * offer.unit_price / 100.0)
   end
 
   def handle_five_for_amount
-    discount_total = unit_price * quantity - (offer.argument * number_of_x + quantity_as_int % 5 * unit_price)
-    Discount.new(product, discount_amt.to_s + " for " + offer.argument.to_s, discount_total)
+    discount_total = unit_price * quantity - (offer.unit_price * number_of_x + quantity_as_int % 5 * unit_price)
+    Discount.new(product, discount_amt.to_s + " for " + offer.unit_price.to_s, discount_total)
   end
 end

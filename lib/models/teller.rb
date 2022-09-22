@@ -5,11 +5,11 @@ class Teller
     @offers = {}
   end
 
-  def add_special_offer(offer_type, product, argument)
-    @offers[product] = Offer.new(offer_type, product, argument)
+  def add_special_offer(offer_type, product, unit_price)
+    @offers[product] = Offer.new(offer_type, product, unit_price)
   end
 
-  def checks_out_articles_from(the_cart)
+  def checks_out_items_from(the_cart)
     receipt = Receipt.new
 
     the_cart.items.each do |item|
