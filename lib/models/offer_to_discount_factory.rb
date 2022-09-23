@@ -10,10 +10,10 @@ class OfferToDiscountFactory
   end
 
   def handle_offer
-    return TwoForAmount.new(offer, quantity, unit_price).handle if two_for_amount_offer?
-    return ThreeForTwo.new(offer, quantity, unit_price).handle if three_for_two_offer?
-    return FiveForAmount.new(offer, quantity, unit_price).handle if five_for_amount_offer?
-    return TenPercent.new(offer, quantity, unit_price).handle if ten_percent_discount_offer?
+    return create_two_for_amount_discount if two_for_amount_offer?
+    return create_handle_three_for_two_discount if three_for_two_offer?
+    return create_handle_five_for_amount_discount if five_for_amount_offer?
+    return create_handle_ten_percent_discount if ten_percent_discount_offer?
   end
 
   private
@@ -43,69 +43,29 @@ class OfferToDiscountFactory
   def unit_price
     @unit_price = catalog.unit_price(product)
   end
-end
 
-class TwoForAmount
-  attr_reader :offer, :quantity, :unit_price
-
-  def initialize(offer, quantity, unit_price)
-    @offer = offer
-    @quantity = quantity
-    @unit_price = unit_price
-  end
-
-  def handle
+  def create_two_for_amount_discount
     discount_amt = 2
     total = offer.unit_price * (quantity.to_i / discount_amt) + quantity.to_i % 2 * unit_price
     discount_n = unit_price * quantity - total
     Discount.new(offer.product, "2 for " + offer.unit_price.to_s, discount_n)
   end
-end
 
-class ThreeForTwo
-  attr_reader :offer, :quantity, :unit_price
-
-  def initialize(offer, quantity, unit_price)
-    @offer = offer
-    @quantity = quantity
-    @unit_price = unit_price
-  end
-
-  def handle
+  def create_handle_three_for_two_discount
     discount_amt = 3
     number_of_x = quantity.to_i / discount_amt
     discount_amount = quantity * unit_price - ((number_of_x * 2 * unit_price) + quantity.to_i % 3 * unit_price)
     Discount.new(offer.product, "3 for 2", discount_amount)
   end
-end
 
-class FiveForAmount
-  attr_reader :offer, :quantity, :unit_price
-
-  def initialize(offer, quantity, unit_price)
-    @offer = offer
-    @quantity = quantity
-    @unit_price = unit_price
-  end
-
-  def handle
+  def create_handle_five_for_amount_discount
     discount_amt = 5
     number_of_x = quantity.to_i / discount_amt
     discount_total = unit_price * quantity - (offer.unit_price * number_of_x + quantity.to_i % 5 * unit_price)
     Discount.new(offer.product, discount_amt.to_s + " for " + offer.unit_price.to_s, discount_total)
   end
-end
 
-class TenPercent
-  attr_reader :offer, :quantity, :unit_price
-
-  def initialize(offer, quantity, unit_price)
-    @offer = offer
-    @quantity = quantity
-    @unit_price = unit_price
-  end
-
-  def handle
+  def create_handle_ten_percent_discount
     Discount.new(offer.product, offer.unit_price.to_s + "% off", quantity * unit_price * offer.unit_price / 100.0)
   end
 end
