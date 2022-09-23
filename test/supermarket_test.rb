@@ -40,7 +40,7 @@ class SupermarketTest < Minitest::Test
     @the_cart.add_item(@toothbrush)
     @the_cart.add_item(@toothbrush)
     @the_cart.add_item(@toothbrush)
-    @teller.add_special_offer(SpecialOfferType::THREE_FOR_TWO, @toothbrush, @catalog.unit_price(@toothbrush))
+    @teller.add_special_offer(Offer::THREE_FOR_TWO, @toothbrush, @catalog.unit_price(@toothbrush))
     receipt = @teller.checks_out_items_from(@the_cart)
     verify ReceiptPrinter.new(40).print_receipt(receipt)
   end
@@ -51,7 +51,7 @@ class SupermarketTest < Minitest::Test
     @the_cart.add_item(@toothbrush)
     @the_cart.add_item(@toothbrush)
     @the_cart.add_item(@toothbrush)
-    @teller.add_special_offer(SpecialOfferType::THREE_FOR_TWO, @toothbrush, @catalog.unit_price(@toothbrush))
+    @teller.add_special_offer(Offer::THREE_FOR_TWO, @toothbrush, @catalog.unit_price(@toothbrush))
     receipt = @teller.checks_out_items_from(@the_cart)
     verify ReceiptPrinter.new(40).print_receipt(receipt)
   end
@@ -64,7 +64,7 @@ class SupermarketTest < Minitest::Test
 
   def test_percent_discount
     @the_cart.add_item(@rice)
-    @teller.add_special_offer(SpecialOfferType::TEN_PERCENT_DISCOUNT, @rice, 10.0)
+    @teller.add_special_offer(Offer::TEN_PERCENT_DISCOUNT, @rice, 10.0)
     receipt = @teller.checks_out_items_from(@the_cart)
     verify ReceiptPrinter.new(40).print_receipt(receipt)
   end
@@ -72,35 +72,35 @@ class SupermarketTest < Minitest::Test
   def test_x_for_y_discount
     @the_cart.add_item(@cherry_tomatoes)
     @the_cart.add_item(@cherry_tomatoes)
-    @teller.add_special_offer(SpecialOfferType::TWO_FOR_AMOUNT, @cherry_tomatoes, 0.99)
+    @teller.add_special_offer(Offer::TWO_FOR_AMOUNT, @cherry_tomatoes, 0.99)
     receipt = @teller.checks_out_items_from(@the_cart)
     verify ReceiptPrinter.new(40).print_receipt(receipt)
   end
 
   def test_five_for_y_discount
     @the_cart.add_item_quantity(@apples, 5)
-    @teller.add_special_offer(SpecialOfferType::FIVE_FOR_AMOUNT, @apples, 6.99)
+    @teller.add_special_offer(Offer::FIVE_FOR_AMOUNT, @apples, 6.99)
     receipt = @teller.checks_out_items_from(@the_cart)
     verify ReceiptPrinter.new(40).print_receipt(receipt)
   end
 
   def test_five_for_y_discount_with_six
     @the_cart.add_item_quantity(@apples, 6)
-    @teller.add_special_offer(SpecialOfferType::FIVE_FOR_AMOUNT, @apples, 6.99)
+    @teller.add_special_offer(Offer::FIVE_FOR_AMOUNT, @apples, 6.99)
     receipt = @teller.checks_out_items_from(@the_cart)
     verify ReceiptPrinter.new(40).print_receipt(receipt)
   end
 
   def test_five_for_y_discount_with_sixteen
     @the_cart.add_item_quantity(@apples, 16)
-    @teller.add_special_offer(SpecialOfferType::FIVE_FOR_AMOUNT, @apples, 6.99)
+    @teller.add_special_offer(Offer::FIVE_FOR_AMOUNT, @apples, 6.99)
     receipt = @teller.checks_out_items_from(@the_cart)
     verify ReceiptPrinter.new(40).print_receipt(receipt)
   end
 
   def test_five_for_y_discount_with_four
     @the_cart.add_item_quantity(@apples, 4)
-    @teller.add_special_offer(SpecialOfferType::FIVE_FOR_AMOUNT, @apples, 6.99)
+    @teller.add_special_offer(Offer::FIVE_FOR_AMOUNT, @apples, 6.99)
     receipt = @teller.checks_out_items_from(@the_cart)
     verify ReceiptPrinter.new(40).print_receipt(receipt)
   end
