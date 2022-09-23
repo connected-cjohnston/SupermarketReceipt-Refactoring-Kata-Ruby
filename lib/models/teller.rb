@@ -6,7 +6,7 @@ class Teller
   end
 
   def add_special_offer(offer_type, product, unit_price)
-    @offers[product] = Offer.new(offer_type, product, unit_price)
+    @offers[product] = Offer.create(offer_type, product, unit_price)
   end
 
   def checks_out_items_from(the_cart)
@@ -29,7 +29,10 @@ class Teller
       offer = @offers[product]
       next unless offer
 
-      discount = OfferToDiscountFactory.new(offer, @catalog, product, the_cart.product_quantities).handle_offer
+      unit_price = @catalog.unit_price(product)
+      quantity = the_cart.product_quantities[product]
+
+      discount = offer.discount(quantity, unit_price)
 
       receipt.add_discount(discount) if discount
     end
