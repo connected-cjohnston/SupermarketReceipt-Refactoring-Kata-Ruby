@@ -26,9 +26,10 @@ class Teller
 
   def handle_offers(the_cart, receipt)
     the_cart.product_quantities.keys.each do |product|
-      next unless @offers.key?(product)
+      offer = @offers[product]
+      next unless offer
 
-      discount = OfferHandler.new(@offers, @catalog, product, the_cart.product_quantities).handle_offer
+      discount = OfferToDiscountFactory.new(offer, @catalog, product, the_cart.product_quantities).handle_offer
 
       receipt.add_discount(discount) if discount
     end
