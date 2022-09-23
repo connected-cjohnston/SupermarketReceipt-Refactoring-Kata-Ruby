@@ -6,14 +6,7 @@ class Receipt
   end
 
   def total_price
-    total = 0.0
-    for item in @items do
-      total += item.total_price
-    end
-    for discount in @discounts do
-      total -= discount.discount_amount
-    end
-    total
+    @items.sum(&:total_price) - @discounts.sum(&:discount_amount)
   end
 
   def add_product(product, quantity, price, total_price)

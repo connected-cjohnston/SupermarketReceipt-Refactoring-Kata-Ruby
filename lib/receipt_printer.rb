@@ -6,7 +6,8 @@ class ReceiptPrinter
 
   def print_receipt(receipt)
     result = ""
-    for item in receipt.items do
+
+    receipt.items.each { |item|
       price = "%.2f" % item.total_price
       quantity = self.class.present_quantity(item)
       name = item.product.name
@@ -20,26 +21,29 @@ class ReceiptPrinter
       end
 
       result.concat(line);
-    end
-    for discount in receipt.discounts do
+    }
+
+    receipt.discounts.each { |discount|
       product_presentation = discount.product.name
       price_presentation = "%.2f" % discount.discount_amount
       description = discount.description
+
       result.concat(description)
       result.concat("(")
       result.concat(product_presentation)
       result.concat(")")
       result.concat(self.class.whitespace(@columns - 3 - product_presentation.size - description.size - price_presentation.size))
-      result.concat("-");
-      result.concat(price_presentation);
-      result.concat("\n");
-    end
+      result.concat("-")
+      result.concat(price_presentation)
+      result.concat("\n")
+    }
+
     result.concat("\n")
     price_presentation = "%.2f" % receipt.total_price.to_f
     total = "Total: "
     whitespace = self.class.whitespace(@columns - total.size - price_presentation.size)
     result.concat(total, whitespace, price_presentation)
-    return result.to_s
+    result.to_s
   end
 
   def self.present_quantity(item)
@@ -53,5 +57,4 @@ class ReceiptPrinter
     end
     return whitespace
   end
-
 end
