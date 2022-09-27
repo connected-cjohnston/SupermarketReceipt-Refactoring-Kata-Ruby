@@ -8,13 +8,13 @@ class SupermarketTest < Minitest::Test
     @teller = Teller.new(@catalog)
     @the_cart = ShoppingCart.new
 
-    @toothbrush = Product.new("toothbrush", ProductUnit::EACH)
+    @toothbrush = Product.new("toothbrush", Product::EACH)
     @catalog.add_product(@toothbrush, 0.99)
-    @rice = Product.new("rice", ProductUnit::EACH)
+    @rice = Product.new("rice", Product::EACH)
     @catalog.add_product(@rice, 2.99)
-    @apples = Product.new("apples", ProductUnit::KILO)
+    @apples = Product.new("apples", Product::KILO)
     @catalog.add_product(@apples, 1.99)
-    @cherry_tomatoes = Product.new("cherry tomato box", ProductUnit::EACH)
+    @cherry_tomatoes = Product.new("cherry tomato box", Product::EACH)
     @catalog.add_product(@cherry_tomatoes, 0.69)
   end
 

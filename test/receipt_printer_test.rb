@@ -4,8 +4,8 @@ class ReceiptPrinterTest < Minitest::Test
   include Approvals
 
   def setup
-    @toothbrush = Product.new("toothbrush", ProductUnit::EACH)
-    @apples = Product.new("apples", ProductUnit::KILO)
+    @toothbrush = Product.new("toothbrush", Product::EACH)
+    @apples = Product.new("apples", Product::KILO)
     @receipt = Receipt.new
   end
 

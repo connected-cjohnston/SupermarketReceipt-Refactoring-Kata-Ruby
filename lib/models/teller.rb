@@ -29,10 +29,10 @@ class Teller
       offer = @offers[product]
       next unless offer
 
-      unit_price = @catalog.unit_price(product)
-      quantity = the_cart.product_quantities[product]
-
-      discount = offer.discount(quantity, unit_price)
+      discount = offer.discount(
+        the_cart.product_quantities[product],
+        @catalog.unit_price(product)
+      )
 
       receipt.add_discount(discount) if discount
     end
